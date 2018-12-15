@@ -25,49 +25,29 @@ def load_labeled_data(data_root):
 
 def create_feature_sets(labeled_data):
     # create feature sets
-    # feature_set = [(wsd_features(inst), inst[3]) for inst in labeled_data]
-    # train_set = feature_set[200:]
-    # test_set = feature_set[:200]
-    # return train_set, test_set
-    pass
+    feature_set = [(sms_features(inst), inst[0]) for inst in labeled_data]
+    div = int(len(labeled_data) * 0.1)
+    train_set = feature_set[div:]
+    test_set = feature_set[:div]
+    return train_set, test_set
 
 
-def wsd_features(instance):
-    # context = instance[2]
-    # position = instance[1]
-    # preceding_item = context[position-1]
-    # following_item = context[position+1]
-    # synset_names = [[s.name() for s in wn.synsets(word)] if word.isalnum() else [None] for (word, tag) in context]
-    # return {
-    #     'preceding_word': preceding_item[0],
-    #     'preceding_tag': preceding_item[1],
-    #     'following_word': following_item[0],
-    #     'following_tag': following_item[1],
-    #     'name_in_sentence': ('NNP' in [tag for (word, tag) in context]),
-    #     'preceding_synset_overlap': (not not set(synset_names[position]) & set(synset_names[position - 1])),
-    #     'following_synset_overlap': (not not set(synset_names[position]) & set(synset_names[position + 1])),
-    #     'sentence_length': len(context)
-    #     }
-    pass
-
-
-def make_instance(tagged_sentence):
-    # words = [t[0] for t in tagged_sentence]
-    # position = words.index('interest')
-    # return SensevalInstance('interest-n', position, tagged_sentence, [])
+def sms_features(instance):
+    message = instance[1]
+    return {
+        'message_length': len(message)
+        }
     pass
 
 
 def train_classifier(training_set):
     # create the classifier
-    # return nltk.NaiveBayesClassifier.train(training_set)
-    pass
+    return nltk.NaiveBayesClassifier.train(training_set)
 
 
 def evaluate_classifier(classifier, test_set):
     # get the accuracy and print it
-    # print('classifier accuracy: ' + str(nltk.classify.accuracy(classifier, test_set)))
-    pass
+    print('classifier accuracy: ' + str(nltk.classify.accuracy(classifier, test_set)))
 
 
 def run_classifier(classifier):
@@ -90,6 +70,7 @@ def run_classifier(classifier):
 if __name__ == '__main__':
 
     labeled_data = load_labeled_data('SMS')
+    pprint.pprint(labeled_data[:40])
     # training_set, test_set = create_feature_sets(labeled_data)
     # classifier = train_classifier(training_set)
     # evaluate_classifier(classifier, test_set)
