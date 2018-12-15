@@ -34,6 +34,8 @@ def create_feature_sets(labeled_data):
 
 def sms_features(instance):
     message = instance[1]
+    stopwords = nltk.corpus.stopwords.words('english')
+    without_stopwords = ' '.join(word for word in message.split() if word not in set(stopwords))
     return {
         'message_length': len(message)
         }
