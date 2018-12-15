@@ -19,7 +19,6 @@ def load_labeled_data(data_root):
     data = open(data_dir + '\\' + filename, encoding="Latin-1").readlines()
     data.pop(0)
     labeled_data = [(inst[:inst.find(',')], inst[inst.find(',')+1:len(inst)-1]) for inst in data]
-    pprint.pprint(labeled_data[:50])
     random.shuffle(labeled_data)
     return labeled_data
 
