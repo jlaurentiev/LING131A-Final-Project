@@ -1,13 +1,6 @@
 """
 
-Executing the program will print the classifier accuracy and a random sentence from Emma from
-the Gutenberg corpus that includes the sense of 'interest' as determined by the classifier.
 
-run_classifier function can be edited to run the classifier on any text from the Gutenberg corpus.
-
-Words and tags for words immediately preceding and following 'interest' seem most effective
-in terms of accuracy. Highest accuracy seems to result when all features are included,
-improving marginally less with each additional feature.
 
 """
 
