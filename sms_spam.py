@@ -33,13 +33,17 @@ def create_feature_sets(labeled_data):
 
 
 def sms_features(instance):
-    message = instance[1]
-    stopwords = nltk.corpus.stopwords.words('english')
-    without_stopwords = ' '.join(word for word in message.split() if word not in set(stopwords))
+    message = pre_process_data(instance[1])
     return {
         'message_length': len(message)
         }
-    pass
+
+
+def pre_process_data(message):
+    # pre-processing of messages
+    stopwords = nltk.corpus.stopwords.words('english')
+    message = ' '.join(word for word in message.split() if word not in set(stopwords))
+    return message
 
 
 def train_classifier(training_set):
