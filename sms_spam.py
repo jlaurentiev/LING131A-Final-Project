@@ -11,29 +11,42 @@ import pprint
 
 import nltk
 
+dir = os.getcwd()
 
 def load_labeled_data(data_root):
     # create corpus and collect all labeled data
-    data_dir = os.getcwd() + '\\' + data_root
+    data_dir = dir + '\\' + data_root
     filename = 'sms_spam.csv'
-    data = open(data_dir + '\\' + filename, encoding="Latin-1").readlines()
+    data = open(data_dir + '\\' + filename, encoding="Latin-1").read().splitlines()
     data.pop(0)
-    labeled_data = [(inst[:inst.find(',')], inst[inst.find(',')+1:len(inst)-1]) for inst in data]
+    labeled_data = [(inst[:inst.find(',')], pre_process_data(inst[inst.find(',')+1:])) for inst in data]
     random.shuffle(labeled_data)
     return labeled_data
 
 
+def pre_process_data(message):
+    # pre-processing of messages
+    stopwords = nltk.corpus.stopwords.words('english')
+    message = ' '.join(word for word in message.split() if word not in set(stopwords))
+    return message
+
+
 def create_feature_sets(labeled_data):
     # create feature sets
-    feature_set = [(sms_features(inst), inst[0]) for inst in labeled_data]
+    ham_bigrams = [nltk.bigrams(text) for (label, text) in labeled_data if label == 'ham']
+    spam_bigrams = [nltk.bigrams(text) for (label, text) in labeled_data if label == 'spam']
+    feature_set = [(sms_features(inst, ham_bigrams, spam_bigrams), inst[0]) for inst in labeled_data]
     div = int(len(labeled_data) * 0.1)
     train_set = feature_set[div:]
     test_set = feature_set[:div]
     return train_set, test_set
 
 
-def sms_features(instance):
-    message = pre_process_data(instance[1])
+def sms_features(instance, ham_bigrams, spam_bigrams):
+    message = instance[1]
+    message_tokens = nltk.word_tokenize(message)
+    message_tags = nltk.pos_tag(message_tokens)
+    name_data = open(dir + '\\' + 'Names.txt').read().splitlines()
     def has_slang(message):
     	slang = re.findall(r'(lol|lmao|wtf|bff|omg|rofl)')
     	return True if slang else False
@@ -45,20 +58,20 @@ def sms_features(instance):
         return True if spam_call else False
     def is_over_length(message):
         return len(message)
+    fdist_ham_bigrams = nltk.FreqDist(ham_bigrams)
+    fdist_spam_bigrams = nltk.FreqDist(spam_bigrams)
+    message_bigrams = list(nltk.bigrams(message_tokens))
     return {
         'message_length': len(message),
         'has_slang': has_slang(message),
         'has_emoticon': has_emoticon(message),
         'is_spam_call': is_spam_call(message),
-        'length_of_message': is_over_length(message)
+        'length_of_message': is_over_length(message),
+        'contains_gibberish': re.search(r'\b[A-z]+[0-9]+.*\b', message) is not None,
+        'contains_name': [word for word in message_tokens if word.title() in name_data] != [],
+        'contains_common_ham_bigram': [bgram for bgram in message_bigrams if bgram in fdist_ham_bigrams.most_common(10)] != [],
+        'contains_common_spam_bigram': [bgram for bgram in message_bigrams if bgram in fdist_spam_bigrams.most_common(10)] != []
         }
-
-
-def pre_process_data(message):
-    # pre-processing of messages
-    stopwords = nltk.corpus.stopwords.words('english')
-    message = ' '.join(word for word in message.split() if word not in set(stopwords))
-    return message
 
 
 def train_classifier(training_set):
@@ -91,8 +104,7 @@ def run_classifier(classifier):
 if __name__ == '__main__':
 
     labeled_data = load_labeled_data('SMS')
-    pprint.pprint(labeled_data[:40])
-    # training_set, test_set = create_feature_sets(labeled_data)
+    training_set, test_set = create_feature_sets(labeled_data)
     # classifier = train_classifier(training_set)
     # evaluate_classifier(classifier, test_set)
     # run_classifier(classifier)
