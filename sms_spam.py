@@ -90,8 +90,8 @@ def train_classifier_max_ent(training_set):
 
 
 def evaluate_classifier(classifier, test_set):
-    # get the accuracy and print it
-    print('classifier accuracy: ' + str(nltk.classify.accuracy(classifier, test_set)))
+    # get the accuracy of the test set
+    return str(nltk.classify.accuracy(classifier, test_set))
 
 
 def run_classifier(classifier):
@@ -115,14 +115,12 @@ if __name__ == '__main__':
 
     labeled_data = load_labeled_data('SMS')
     training_set, test_set = create_feature_sets(labeled_data)
-    # classifier_me = train_classifier_max_ent(training_set)
-    # evaluate_classifier(classifier_me, test_set)
-    # classifier_bayes = train_classifier_bayes(training_set)
-    # classifier_dec_tree = train_classifier_dec_tree(training_set)
-    # classifier_max_ent = train_classifier_max_ent(training_set)
-    # evaluate_classifier(classifier_bayes, test_set)
-    # evaluate_classifier(classifier_dec_tree, test_set)
-    # evaluate_classifier(classifier_max_ent, test_set)
-    # run_classifier(classifier)
-    print(nltk.DecisionTreeClassifier.train(training_set).pretty_format())
+    classifier_bayes = train_classifier_bayes(training_set)
+    classifier_dec_tree = train_classifier_dec_tree(training_set)
+    classifier_max_ent = train_classifier_max_ent(training_set)
+    print(classifier_dec_trees.pretty_format())
     nltk.NaiveBayesClassifier.train(training_set).show_most_informative_features(10)
+    print('Naive Bayes accuracy ' + evaluate_classifier(classifier_bayes, test_set))
+    print('Decision Tree accuracy ' + evaluate_classifier(classifier_dec_tree, test_set))
+    print('Maximum Entropy accuracy ' + evaluate_classifier(classifier_max_ent, test_set))    
+    # run_classifier(classifier)
