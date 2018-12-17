@@ -34,8 +34,17 @@ def create_feature_sets(labeled_data):
 
 def sms_features(instance):
     message = pre_process_data(instance[1])
+    def has_slang(message):
+    	slang = re.findall(r'(lol|lmao|wtf|bff|omg|rofl)')
+    	return True if slang else False
+    def has_emoticon(message):
+    	emoticon = re.findall(r'[:;]\'?\s?(-?|\*?|\^)?\s?[\)\(DPp3O0o]')
+    	return True if emoticon else False
+    
     return {
         'message_length': len(message)
+        'has_slang': text_slang(message)
+        'has_emoticon': has_emoticon(message)
         }
 
 
