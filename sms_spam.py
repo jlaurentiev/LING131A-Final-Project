@@ -12,9 +12,9 @@ dir = os.getcwd()
 
 def load_labeled_data(data_root):
     # create corpus and collect all labeled data
-    data_dir = dir + '\\' + data_root
+    data_dir = os.path.join(dir, data_root)
     filename = 'sms_spam.csv'
-    data = open(data_dir + '\\' + filename, encoding="Latin-1").read().splitlines()
+    data = open(os.path.join(data_dir, filename), encoding="Latin-1").read().splitlines()
     data.pop(0)
     labeled_data = [(inst[:inst.find(',')], pre_process_data(inst[inst.find(',')+1:])) for inst in data]
     random.shuffle(labeled_data)
@@ -44,7 +44,7 @@ def sms_features(instance, ham_bigrams, spam_bigrams):
     message = instance[1]
     message_tokens = nltk.word_tokenize(message)
     message_tags = nltk.pos_tag(message_tokens)
-    name_data = open(dir + '\\' + 'Names.txt').read().splitlines()
+    name_data = open(os.path.join(dir, 'Names.txt')).read().splitlines()
     fdist_ham_bigrams = nltk.FreqDist(ham_bigrams)
     fdist_spam_bigrams = nltk.FreqDist(spam_bigrams)
     message_bigrams = list(nltk.bigrams(message_tokens))
