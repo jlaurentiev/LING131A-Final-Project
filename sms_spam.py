@@ -125,4 +125,4 @@ if __name__ == '__main__':
     # evaluate_classifier(classifier_max_ent, test_set)
     # run_classifier(classifier)
     print(nltk.DecisionTreeClassifier.train(training_set).pretty_format())
-    nltk.NaiveBayesClassifier.train(training_set).show_most_informative_features(100)
+    nltk.NaiveBayesClassifier.train(training_set).show_most_informative_features(10)
