@@ -48,47 +48,19 @@ def sms_features(instance, ham_bigrams, spam_bigrams):
     fdist_ham_bigrams = nltk.FreqDist(ham_bigrams)
     fdist_spam_bigrams = nltk.FreqDist(spam_bigrams)
     message_bigrams = list(nltk.bigrams(message_tokens))
-    def find_win(message):
-        f1 = re.compile(r'win|won|winner',re.I)
-        win = f1.match(message)
-        return True if find_win else False
-    def find_urgrent(message):
-        f2 = re.compile(r'URGENT')
-        urgent = f2.match(message)
-        return True if find_urgent else False
-    def find_prize(message):
-        f3 = re.compile(r'prize',re.I)
-        prize = f3.match(message)
-        return True if find_urgent else False
-    def find_free(message):
-        f4 = re.compile(r'FREE')
-        free = f4.match(message)
-        return True if find_free else False
-    def find_claim(message):
-        f5 = re.compile(r'claim',re.I)
-        claim = f5.match(message)
-        return True if find_claim else False
-    def capitalization(message):
-        f6 = re.compile(r'^[A-Z\s]+$')
-        cap = f6.match(message)
-        return True if capitalization else False
-    def find_website(message):
-        f7 = re.compile(r'\A(http://)?(www)?.*\Z')
-        web = f7.match(message)
-        return True if find_website else False
     return {
         'has_slang': re.search(r'(lol|lmao|wtf|bff|omg|rofl)', message) is not None,
         'has_emoticon': re.findall(r'[:;]\'?\s?(-?|\*?|\^)?\s?[\)\(DPp3O0o]', message) is not None,
         'is_spam_call': re.findall(r'(txt|text|TXT|TEXT|call|CALL|Call)([A-Z]{,10}|[0-9]+)',message) is not None,
         'length_of_message': len(message),
         'contains_gibberish': re.search(r'\b[A-z]+[0-9]+.*\b', message) is not None,
-        'find_win': find_win(message),
-        'find_urgrent': find_urgrent(message),
-        'find_prize': find_prize(message),
-        'find_free': find_free(message),
-        'find_claim': find_claim(message),
-        'capitalization': capitalization(message),
-        'find_website': find_website(message),
+        'find_win': re.findall(r'win|won|winner',re.I,message) is not None,
+        'find_urgrent': re.findall(r'URGENT',message) is not None,
+        'find_prize': re.findall(r'prize',re.I, message) is not None,
+        'find_free': re.findall(r'FREE', message) is not None,
+        'find_claim': re.findall(r'claim',re.I,message) is not None,
+        'capitalization': re.findall(r'^[A-Z\s]+$',message) is not None,
+        'find_website': re.findall(r'\A(http://)?(www)?.*\Z',message) is not None,
         'contains_name': [word for word in message_tokens if word.title() in name_data] != [],
         'contains_common_ham_bigram': [bgram for bgram in message_bigrams if bgram in fdist_ham_bigrams.most_common(10)] != [],
         'contains_common_spam_bigram': [bgram for bgram in message_bigrams if bgram in fdist_spam_bigrams.most_common(10)] != []
