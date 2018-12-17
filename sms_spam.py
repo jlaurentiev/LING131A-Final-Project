@@ -67,9 +67,14 @@ def sms_features(instance, ham_bigrams, spam_bigrams):
         }
 
 
-def train_classifier(training_set):
-    # create the classifier
+def train_classifier_bayes(training_set):
+    # create Naive Bayes classifier
     return nltk.NaiveBayesClassifier.train(training_set)
+
+
+def train_classifier_max_ent(training_set):
+    # create maximum entropy classifier
+    return nltk.MaxentClassifier.train(training_set)
 
 
 def evaluate_classifier(classifier, test_set):
@@ -98,6 +103,8 @@ if __name__ == '__main__':
 
     labeled_data = load_labeled_data('SMS')
     training_set, test_set = create_feature_sets(labeled_data)
-    # classifier = train_classifier(training_set)
-    # evaluate_classifier(classifier, test_set)
+    # classifier_me = train_classifier_max_ent(training_set)
+    # evaluate_classifier(classifier_me, test_set)
+    # classifier_bayes = train_classifier_bayes(training_set)
+    # evaluate_classifier(classifier_bayes, test_set)
     # run_classifier(classifier)
