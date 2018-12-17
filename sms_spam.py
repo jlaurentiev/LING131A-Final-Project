@@ -40,11 +40,17 @@ def sms_features(instance):
     def has_emoticon(message):
     	emoticon = re.findall(r'[:;]\'?\s?(-?|\*?|\^)?\s?[\)\(DPp3O0o]')
     	return True if emoticon else False
-    
+    def is_spam_call(message):
+        spam_call = re.findall(r'(txt|text|TXT|TEXT|call|CALL|Call)([A-Z]{,10}|[0-9]+)')
+        return True if spam_call else False
+    def is_over_length(message):
+        return len(message)
     return {
-        'message_length': len(message)
-        'has_slang': has_slang(message)
-        'has_emoticon': has_emoticon(message)
+        'message_length': len(message),
+        'has_slang': has_slang(message),
+        'has_emoticon': has_emoticon(message),
+        'is_spam_call': is_spam_call(message),
+        'length_of_message': is_over_length(message)
         }
 
 
