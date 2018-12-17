@@ -48,11 +48,18 @@ def sms_features(instance, ham_bigrams, spam_bigrams):
     fdist_ham_bigrams = nltk.FreqDist(ham_bigrams)
     fdist_spam_bigrams = nltk.FreqDist(spam_bigrams)
     message_bigrams = list(nltk.bigrams(message_tokens))
+    def len_feature(text):
+        if len(text) > 200:
+            return 'long'
+        elif len(text) > 85:
+            return 'medium'
+        else:
+            return 'short'
     return {
         'has_slang': re.search(r'(lol|lmao|wtf|bff|omg|rofl)', message) is not None,
         'has_emoticon': re.findall(r'[:;]\'?\s?(-?|\*?|\^)?\s?[\)\(DPp3O0o]', message) is not None,
         'is_spam_call': re.findall(r'(txt|text|TXT|TEXT|call|CALL|Call)([A-Z]{,10}|[0-9]+)',message) is not None,
-        'length_of_message': len(message),
+        'length_of_message': len_feature(message),
         'contains_gibberish': re.search(r'\b[A-z]+[0-9]+.*\b', message) is not None,
         'find_win': re.findall(r'win|won|winner', message, re.I) is not None,
         'find_urgent': re.findall(r'URGENT', message) is not None,
