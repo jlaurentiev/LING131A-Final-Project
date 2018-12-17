@@ -7,10 +7,10 @@ Names data source: https://www.cs.cmu.edu/afs/cs/project/ai-repository/ai/areas/
 
 Code - who wrote what:
 
-load_labeled_data -- John
-pre_process_data -- John
-create_feature_sets -- John
-sms_features -- Mingfan, Sarah, John, Meiqi
-train_classifier --
-evaluate_classifier --
-run_classifier --
+load_labeled_data -- John;
+pre_process_data -- John;
+create_feature_sets -- John;
+sms_features -- Mingfan, Sarah, John, Meiqi;
+train_classifier -- ;
+evaluate_classifier -- ;
+run_classifier -- ;
