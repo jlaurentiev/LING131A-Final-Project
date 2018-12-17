@@ -73,8 +73,8 @@ def train_classifier_bayes(training_set):
 
 
 def train_classifier_dec_tree(training_set):
-	# create decision tree classifier
-	return nltk.DecisionTreeClassifier.train(training_set)
+    # create decision tree classifier
+    return nltk.DecisionTreeClassifier.train(training_set)
 
 
 def train_classifier_max_ent(training_set):
