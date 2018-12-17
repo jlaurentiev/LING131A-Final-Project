@@ -27,7 +27,8 @@ def load_labeled_data(data_root):
 def pre_process_data(message):
     # pre-processing of messages
     stopwords = nltk.corpus.stopwords.words('english')
-    message = ' '.join(word for word in message.split() if word not in set(stopwords))
+    porter = nltk.PorterStemmer()
+    message = ' '.join(porter.stem(word) for word in message.split() if word not in set(stopwords))
     return message
 
 
