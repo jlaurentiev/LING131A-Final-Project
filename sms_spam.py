@@ -55,7 +55,7 @@ def sms_features(instance, ham_bigrams, spam_bigrams):
         'length_of_message': len(message),
         'contains_gibberish': re.search(r'\b[A-z]+[0-9]+.*\b', message) is not None,
         'find_win': re.findall(r'win|won|winner',re.I,message) is not None,
-        'find_urgrent': re.findall(r'URGENT',message) is not None,
+        'find_urgent': re.findall(r'URGENT',message) is not None,
         'find_prize': re.findall(r'prize',re.I, message) is not None,
         'find_free': re.findall(r'FREE', message) is not None,
         'find_claim': re.findall(r'claim',re.I,message) is not None,
