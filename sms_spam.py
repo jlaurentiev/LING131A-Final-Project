@@ -51,11 +51,10 @@ def sms_features(instance, ham_bigrams, spam_bigrams):
     fdist_spam_bigrams = nltk.FreqDist(spam_bigrams)
     message_bigrams = list(nltk.bigrams(message_tokens))
     return {
-        'message_length': len(message),
         'has_slang': re.search(r'(lol|lmao|wtf|bff|omg|rofl)', message) is not None,
         'has_emoticon': re.findall(r'[:;]\'?\s?(-?|\*?|\^)?\s?[\)\(DPp3O0o]', message) is not None,
         'is_spam_call': re.findall(r'(txt|text|TXT|TEXT|call|CALL|Call)([A-Z]{,10}|[0-9]+)',message) is not None,
-        'length_of_message': is_over_length(message),
+        'length_of_message': len(message),
         'contains_gibberish': re.search(r'\b[A-z]+[0-9]+.*\b', message) is not None,
         'contains_name': [word for word in message_tokens if word.title() in name_data] != [],
         'contains_common_ham_bigram': [bgram for bgram in message_bigrams if bgram in fdist_ham_bigrams.most_common(10)] != [],
