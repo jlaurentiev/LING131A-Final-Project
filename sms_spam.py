@@ -118,7 +118,7 @@ if __name__ == '__main__':
     classifier_bayes = train_classifier_bayes(training_set)
     classifier_dec_tree = train_classifier_dec_tree(training_set)
     classifier_max_ent = train_classifier_max_ent(training_set)
-    print(classifier_dec_trees.pretty_format())
+    print(classifier_dec_tree.pretty_format())
     nltk.NaiveBayesClassifier.train(training_set).show_most_informative_features(10)
     print('Naive Bayes accuracy ' + evaluate_classifier(classifier_bayes, test_set))
     print('Decision Tree accuracy ' + evaluate_classifier(classifier_dec_tree, test_set))
