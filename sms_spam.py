@@ -43,7 +43,7 @@ def sms_features(instance):
     
     return {
         'message_length': len(message)
-        'has_slang': text_slang(message)
+        'has_slang': has_slang(message)
         'has_emoticon': has_emoticon(message)
         }
 
