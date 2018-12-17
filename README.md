@@ -11,6 +11,7 @@ load_labeled_data -- John;
 pre_process_data -- John;
 create_feature_sets -- John;
 sms_features -- Mingfan, Sarah, John, Meiqi;
-train_classifier -- ;
+train_classifier_bayes -- John;
+train_classifier_max_ent -- John;
 evaluate_classifier -- ;
 run_classifier -- ;
