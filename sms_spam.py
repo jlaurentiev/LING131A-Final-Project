@@ -49,6 +49,7 @@ def sms_features(instance, ham_bigrams, spam_bigrams):
     fdist_ham_bigrams = nltk.FreqDist(ham_bigrams)
     fdist_spam_bigrams = nltk.FreqDist(spam_bigrams)
     message_bigrams = list(nltk.bigrams(message_tokens))
+    
     def len_feature(text):
         if len(text) > 200:
             return 'long'
