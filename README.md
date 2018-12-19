@@ -10,7 +10,7 @@ Names data source: https://www.cs.cmu.edu/afs/cs/project/ai-repository/ai/areas/
 Code - who wrote what:
 
 load_labeled_data -- John;
-pre_process_data -- John;
+pre_process_data -- Mingfan;
 create_feature_sets -- John;
 sms_features -- Mingfan, Sarah, John, Meiqi;
   Mingfan - find_award, find_website, length_of_message, is_spam_call
@@ -20,7 +20,7 @@ sms_features -- Mingfan, Sarah, John, Meiqi;
 get_ham_bigrams -- John;
 get_spam_bigrams -- John;
 train_classifier_bayes -- John;
-train_classifier_max_ent -- John;
+train_classifier_max_ent -- Mingfan;
 train_classifier_dec_tree -- Sarah;
 evaluate_classifier -- Sarah;
 run_classifier -- Meiqi;
