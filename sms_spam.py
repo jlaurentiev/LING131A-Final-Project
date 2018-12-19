@@ -4,7 +4,6 @@
 import os
 import re
 import random
-import pprint
 
 import nltk
 
