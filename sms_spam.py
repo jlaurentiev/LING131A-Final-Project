@@ -11,10 +11,9 @@ import nltk
 dir = os.getcwd()
 
 
-def load_labeled_data(data_root):
+def load_labeled_data(data_root,filename):
     # create corpus and collect all labeled data
     data_dir = os.path.join(dir, data_root)
-    filename = 'development_set.csv'
     data = open(os.path.join(data_dir, filename), encoding="Latin-1").read().splitlines()
     data.pop(0)
     labeled_data = [(inst[:inst.find(',')], pre_process_data(inst[inst.find(',')+1:])) for inst in data]
@@ -95,8 +94,8 @@ def evaluate_classifier(classifier, dev_test_set):
     # get the accuracy of the test set
     return str(nltk.classify.accuracy(classifier, dev_test_set))
 
-def run_classifier(classifier, data_root):
-    labeled_data = load_labeled_data(data_root)
+def run_classifier(classifier):
+    labeled_data = load_labeled_data('SMS','test_set.csv')
     ham_bigrams = [nltk.bigrams(text) for (label, text) in labeled_data if label == 'ham']
     spam_bigrams = [nltk.bigrams(text) for (label, text) in labeled_data if label == 'spam']
     test_set = [(sms_features(inst, ham_bigrams, spam_bigrams), inst[0]) for inst in labeled_data]
@@ -104,7 +103,7 @@ def run_classifier(classifier, data_root):
 
 if __name__ == '__main__':
 
-    labeled_data = load_labeled_data('SMS')
+    labeled_data = load_labeled_data('SMS','development_set.csv')
     training_set, dev_test_set = create_feature_sets(labeled_data)
     classifier_bayes = train_classifier_bayes(training_set)
     classifier_dec_tree = train_classifier_dec_tree(training_set)
@@ -114,4 +113,4 @@ if __name__ == '__main__':
     print('Naive Bayes accuracy ' + evaluate_classifier(classifier_bayes, dev_test_set))
     print('Decision Tree accuracy ' + evaluate_classifier(classifier_dec_tree, dev_test_set))
     print('Maximum Entropy accuracy ' + evaluate_classifier(classifier_max_ent, dev_test_set))    
-    run_classifier(classifier, data_root)
+    run_classifier(classifier)
