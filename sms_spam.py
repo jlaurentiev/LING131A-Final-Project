@@ -97,7 +97,7 @@ def evaluate_classifier(classifier, dev_test_set):
 
 
 def run_classifier(classifier):
-    labeled_data = load_labeled_data('SMS','test_set.csv')
+    labeled_data = load_labeled_data('SMS','test_data.csv')
     # ham_bigrams = [nltk.bigrams(text) for (label, text) in labeled_data if label == 'ham']
     # spam_bigrams = [nltk.bigrams(text) for (label, text) in labeled_data if label == 'spam']
     # test_set = [(sms_features(inst, ham_bigrams, spam_bigrams), inst[0]) for inst in labeled_data]
@@ -129,4 +129,4 @@ if __name__ == '__main__':
     # print('Naive Bayes accuracy ' + evaluate_classifier(classifier_bayes, dev_test_set))
     # print('Decision Tree accuracy ' + evaluate_classifier(classifier_dec_tree, dev_test_set))
     # print('Maximum Entropy accuracy ' + evaluate_classifier(classifier_max_ent, dev_test_set))    
-    # run_classifier(classifier)
+    # run_classifier(classifier) #run it on classifier_bayes, classifier_dec_tree and classifier_max_ent
