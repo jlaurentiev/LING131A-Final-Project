@@ -1,5 +1,5 @@
 # LING131A-Final-Project
-Spam filter final project repository for Intro to NLP
+Spam filter final project repository for Intro to NLP - by Mingfan Chang, Sarah Hotung, John Laurentiev and Meiqi Wang
 
 Simply run the sms_spam.py file. The program will run the naive Bayes classifier on the training data and print the confusion matrix and accuracy.
 
