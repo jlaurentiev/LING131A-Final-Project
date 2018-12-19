@@ -37,8 +37,8 @@ def create_feature_sets(labeled_data):
     feature_set = [(sms_features(inst, ham_bigrams, spam_bigrams), inst[0]) for inst in labeled_data]
     div = int(len(labeled_data) * 0.1)
     train_set = feature_set[div:]
-    test_set = feature_set[:div]
-    return train_set, test_set
+    dev_test_set = feature_set[:div]
+    return train_set, dev_test_set
 
 
 def sms_features(instance, ham_bigrams, spam_bigrams):
@@ -91,38 +91,27 @@ def train_classifier_max_ent(training_set):
     return nltk.MaxentClassifier.train(training_set)
 
 
-def evaluate_classifier(classifier, test_set):
+def evaluate_classifier(classifier, dev_test_set):
     # get the accuracy of the test set
-    return str(nltk.classify.accuracy(classifier, test_set))
+    return str(nltk.classify.accuracy(classifier, dev_test_set))
 
-
-def run_classifier(classifier):
-    # get senseval data for Emma from Gutenberg corpus
-    # any text from Gutenberg corpus can be subbed
-    # prints random sentence that includes sense of 'interest'
-    # emma = nltk.corpus.gutenberg.sents('austen-emma.txt')
-    # tagged_sents = [nltk.pos_tag(s) for s in emma if 'interest' in s]
-    # wsd_insts = [make_instance(s) for s in tagged_sents]
-    # data = [(inst.word, inst.position, inst.context) for inst in wsd_insts]
-    # output = []
-    # for d in data:
-    #     sense = classifier.classify(wsd_features(d))
-    #     output.append([sense if word == 'interest' else word for (word, tag) in d[2]])
-    # printable_output = [' '.join(sent) for sent in output]
-    # print(random.choice(printable_output))
-    pass
-
+def run_classifier(classifier, data_root):
+    labeled_data = load_labeled_data(data_root)
+    ham_bigrams = [nltk.bigrams(text) for (label, text) in labeled_data if label == 'ham']
+    spam_bigrams = [nltk.bigrams(text) for (label, text) in labeled_data if label == 'spam']
+    test_set = [(sms_features(inst, ham_bigrams, spam_bigrams), inst[0]) for inst in labeled_data]
+    return evaluate_classifier(classifier, test_set)
 
 if __name__ == '__main__':
 
     labeled_data = load_labeled_data('SMS')
-    training_set, test_set = create_feature_sets(labeled_data)
+    training_set, dev_test_set = create_feature_sets(labeled_data)
     classifier_bayes = train_classifier_bayes(training_set)
     classifier_dec_tree = train_classifier_dec_tree(training_set)
     classifier_max_ent = train_classifier_max_ent(training_set)
     print(classifier_dec_tree.pretty_format())
     nltk.NaiveBayesClassifier.train(training_set).show_most_informative_features(10)
-    print('Naive Bayes accuracy ' + evaluate_classifier(classifier_bayes, test_set))
-    print('Decision Tree accuracy ' + evaluate_classifier(classifier_dec_tree, test_set))
-    print('Maximum Entropy accuracy ' + evaluate_classifier(classifier_max_ent, test_set))    
-    # run_classifier(classifier)
+    print('Naive Bayes accuracy ' + evaluate_classifier(classifier_bayes, dev_test_set))
+    print('Decision Tree accuracy ' + evaluate_classifier(classifier_dec_tree, dev_test_set))
+    print('Maximum Entropy accuracy ' + evaluate_classifier(classifier_max_ent, dev_test_set))    
+    run_classifier(classifier, data_root)
