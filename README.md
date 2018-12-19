@@ -13,5 +13,6 @@ create_feature_sets -- John;
 sms_features -- Mingfan, Sarah, John, Meiqi;
 train_classifier_bayes -- John;
 train_classifier_max_ent -- John;
-evaluate_classifier -- ;
+train_classifier_dec_tree -- Sarah;
+evaluate_classifier -- Sarah, John;
 run_classifier -- ;
