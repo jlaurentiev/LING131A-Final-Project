@@ -1,7 +1,7 @@
 # LING131A-Final-Project
 Spam filter final project repository for Intro to NLP
 
-Simply run the sms_spam.py file.
+Simply run the sms_spam.py file. The program will run the naive Bayes classifier on the training data and print the confusion matrix and accuracy.
 
 SMS data source: https://www.kaggle.com/uciml/sms-spam-collection-dataset/home
 
