@@ -119,7 +119,7 @@ def confusion_matrix(classifier):
 
 if __name__ == '__main__':
 
-    labeled_data = load_labeled_data('SMS','development_set.csv')
+    labeled_data = load_labeled_data('SMS','development_data.csv')
     training_set, dev_test_set = create_feature_sets(labeled_data)
     classifier_bayes = train_classifier_bayes(training_set)
     confusion_matrix(classifier_bayes)
