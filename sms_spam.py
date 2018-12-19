@@ -10,6 +10,7 @@ import nltk
 
 dir = os.getcwd()
 
+
 def load_labeled_data(data_root):
     # create corpus and collect all labeled data
     data_dir = os.path.join(dir, data_root)
