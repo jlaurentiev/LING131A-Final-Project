@@ -14,7 +14,7 @@ dir = os.getcwd()
 def load_labeled_data(data_root):
     # create corpus and collect all labeled data
     data_dir = os.path.join(dir, data_root)
-    filename = 'sms_spam.csv'
+    filename = 'development_set.csv'
     data = open(os.path.join(data_dir, filename), encoding="Latin-1").read().splitlines()
     data.pop(0)
     labeled_data = [(inst[:inst.find(',')], pre_process_data(inst[inst.find(',')+1:])) for inst in data]
