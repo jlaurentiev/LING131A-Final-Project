@@ -7,6 +7,10 @@ Sarah Hotung
 John Laurentiev
 Meiqi Wang
 
+By default, uses naive Bayes classifier.
+To use decision tree or maximum entropy classifier,
+remove comment # from code in __main__.
+
 """
 
 import os
