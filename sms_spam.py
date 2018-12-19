@@ -127,6 +127,8 @@ if __name__ == '__main__':
     # classifier_max_ent = train_classifier_max_ent(training_set)
     # print(classifier_dec_tree.pretty_format())
     # nltk.NaiveBayesClassifier.train(training_set).show_most_informative_features(10)
+    # nltk.DecisionTreeClassifier.train(training_set).show_most_informative_features(10)
+    # nltk.MaxentClassifier.train(training_set).show_most_informative_features(10)
     # print('Naive Bayes accuracy ' + evaluate_classifier(classifier_bayes, dev_test_set))
     # print('Decision Tree accuracy ' + evaluate_classifier(classifier_dec_tree, dev_test_set))
     # print('Maximum Entropy accuracy ' + evaluate_classifier(classifier_max_ent, dev_test_set))    
