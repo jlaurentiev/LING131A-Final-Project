@@ -1,6 +1,11 @@
 """
 
 SMS Spam Detector Program
+by
+Mingfan Chang
+Sarah Hotung
+John Laurentiev
+Meiqi Wang
 
 """
 
