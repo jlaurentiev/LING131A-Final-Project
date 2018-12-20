@@ -141,21 +141,22 @@ def confusion_matrix(classifier):
 
 
 if __name__ == '__main__':
-
-    labeled_data = load_labeled_data('SMS','development_data.csv')
-    training_set, dev_test_set = create_feature_sets(labeled_data)
-    classifier_bayes = train_classifier_bayes(training_set)
+    
+    import pickle
+    with open('clfs.pkl', 'rb') as f:
+        clfs = pickle.load(f)
+        classifier_bayes = clfs[0]
+        classifier_dec_tree = clfs[1]
+        classifier_max_ent = clfs[2]
     confusion_matrix(classifier_bayes)
-    # classifier_dec_tree = train_classifier_dec_tree(training_set)
-    # confusion_matrix(classifier_dec_tree)
-    # classifier_max_ent = train_classifier_max_ent(training_set)
-    # confusion_matrix(classifier_max_ent)
-    # print(classifier_dec_tree.pretty_format())
-    # nltk.NaiveBayesClassifier.train(training_set).show_most_informative_features(10)
-    # nltk.MaxentClassifier.train(training_set).show_most_informative_features(10)
-    print('Naive Bayes accuracy: ' + evaluate_classifier(classifier_bayes, dev_test_set))
-    # print('Decision Tree accuracy: ' + evaluate_classifier(classifier_dec_tree, dev_test_set))
-    # print('Maximum Entropy accuracy: ' + evaluate_classifier(classifier_max_ent, dev_test_set))    
-    print('Naive Bayes test accuracy: ' + run_classifier(classifier_bayes))
-    # print('Decision Tree test accuracy: ' + run_classifier(classifier_dec_tree))
-    # print('Maximum Entropy test accuracy: ' + run_classifier(classifier_max_ent))
+    confusion_matrix(classifier_dec_tree)
+    confusion_matrix(classifier_max_ent)
+    print(classifier_dec_tree.pretty_format())
+    classifier_bayes.show_most_informative_features(10)
+    classifier_dec_tree.show_most_informative_features(10)
+    print('Naive Bayes accuracy ' + evaluate_classifier(classifier_bayes, dev_test_set))
+    print('Decision Tree accuracy ' + evaluate_classifier(classifier_dec_tree, dev_test_set))
+    print('Maximum Entropy accuracy ' + evaluate_classifier(classifier_max_ent, dev_test_set))    
+    print(run_classifier(classifier_bayes)) 
+    print(run_classifier(classifier_dec_tree))
+    print(run_classifier(classifier_max_ent))
