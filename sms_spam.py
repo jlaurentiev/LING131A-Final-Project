@@ -148,6 +148,8 @@ if __name__ == '__main__':
         classifier_bayes = clfs[0]
         classifier_dec_tree = clfs[1]
         classifier_max_ent = clfs[2]
+    labeled_data = load_labeled_data('SMS', 'development_data.csv')
+    training_set, dev_test_set = create_feature_sets(labeled_data)
     confusion_matrix(classifier_bayes)
     confusion_matrix(classifier_dec_tree)
     confusion_matrix(classifier_max_ent)
